@@ -299,6 +299,8 @@ Other notable parameters include:
   - `xyzir`: same as xyzi type but adds ring (channel) field.
           this type is same as Velodyne point cloud type
           this type is not compatible with the low data profile.
+  - `xyzit`: same as xyzi type but adds timestamp field.
+          this type is not compatible with the low data profile.
 
 This is not a comprehenisve list of all the parameters that the driver supports
 for more detailed list please refer to the `config/driver_params.yaml` file.

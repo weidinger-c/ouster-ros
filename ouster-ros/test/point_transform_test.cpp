@@ -33,6 +33,7 @@ class PointTransformTest : public ::testing::Test {
         initialize_point_elements_with_randoms<point::size(pt_xyz)>(pt_xyz);
         initialize_point_elements_with_randoms<point::size(pt_xyzi)>(pt_xyzi);
         initialize_point_elements_with_randoms<point::size(pt_xyzir)>(pt_xyzir);
+        initialize_point_elements_with_randoms<point::size(pt_xyzit)>(pt_xyzit);
         // native sensor point types
         initialize_point_elements_with_randoms<point::size(pt_legacy)>(
             pt_legacy);
@@ -53,6 +54,7 @@ class PointTransformTest : public ::testing::Test {
     static pcl::PointXYZ pt_xyz;
     static pcl::PointXYZI pt_xyzi;
     static PointXYZIR pt_xyzir;
+    static PointXYZIT pt_xyzit;
     // native point types
     static Point_LEGACY pt_legacy;
     static Point_RNG19_RFL8_SIG16_NIR16_DUAL pt_rg19_rf8_sg16_nr16_dual;
@@ -66,6 +68,7 @@ class PointTransformTest : public ::testing::Test {
 pcl::PointXYZ PointTransformTest::pt_xyz;
 pcl::PointXYZI PointTransformTest::pt_xyzi;
 PointXYZIR PointTransformTest::pt_xyzir;
+PointXYZIT PointTransformTest::pt_xyzit;
 // native point types
 Point_LEGACY PointTransformTest::pt_legacy;
 Point_RNG19_RFL8_SIG16_NIR16_DUAL
@@ -193,6 +196,10 @@ TEST_F(PointTransformTest, ExpectPointFieldZeroed) {
     expect_points_xyz_equal(pt_xyzir, pt_xyz);
     expect_point_fields_zeros<point::size(pt_xyzir)>(pt_xyzir);
 
+    point::transform(pt_xyzit, pt_xyz);
+    expect_points_xyz_equal(pt_xyzit, pt_xyz);
+    expect_point_fields_zeros<point::size(pt_xyzit)>(pt_xyzit);
+
     point::transform(pt_legacy, pt_xyz);
     expect_points_xyz_equal(pt_legacy, pt_xyz);
     expect_point_fields_zeros<point::size(pt_legacy)>(pt_legacy);
@@ -270,6 +277,16 @@ TEST_F(PointTransformTest, TestTransformReduce_RNG15_RFL8_NIR8) {
     point::transform(pt_xyzir, pt_rg15_rfl8_nr8);
     expect_points_xyz_equal(pt_xyzir, pt_rg15_rfl8_nr8);
     verify_point_transform(pt_xyzir, pt_rg15_rfl8_nr8);
+}
+
+TEST_F(PointTransformTest, TestTransformReduce_XYZIT) {
+    point::transform(pt_xyzit, pt_rg19_rf8_sg16_nr16);
+    expect_points_xyz_equal(pt_xyzit, pt_rg19_rf8_sg16_nr16);
+    verify_point_transform(pt_xyzit, pt_rg19_rf8_sg16_nr16);
+
+    point::transform(pt_xyzit, pt_legacy);
+    expect_points_xyz_equal(pt_xyzit, pt_legacy);
+    verify_point_transform(pt_xyzit, pt_legacy);
 }
 
 TEST_F(PointTransformTest,

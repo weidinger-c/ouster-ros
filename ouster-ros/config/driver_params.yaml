@@ -73,7 +73,7 @@ ouster/os_driver:
     # rosbag. See: https://github.com/ros2/rosbag2/issues/125
     use_system_default_qos: false
     # point_type[optional]: choose from: {original, native, xyz, xyzi, o_xyzi, 
-    #                                     yzir}
+    #                                     xyzir, xyzit}
     # Here is a breif description of each option:
     #  - original: This uses the original point representation ouster_ros::Point
     #          of the ouster-ros driver.
@@ -86,6 +86,8 @@ ouster/os_driver:
     #  - o_xyzi: same as xyzi point type but doesn't add the extra 4 padding bytes.
     #  - xyzir: same as xyzi type but adds ring (channel) field.
     #          this type is same as Velodyne point cloud type
+    #          this type is not compatible with the low data profile.
+    #  - xyzit: same as xyzi type but adds timestamp field.
     #          this type is not compatible with the low data profile.
     # for more details about the fields of each point type and their data refer
     # to the following header files:
